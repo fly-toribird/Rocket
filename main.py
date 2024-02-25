@@ -3,16 +3,32 @@ import random
 
 origin_formulas = ["+", "-", "*", "/"]
 
-
 class formula:
     def __init__(self,formula):
-        self.formula = formula
+        self.formula:list = formula
 
     def add(self,new_formula):
         self.formula.append(new_formula)
 
     def remove(self,number):
         del self.formula[number]
+
+
+def calculate(formula,num1,num2):
+    for f in range(formula.formula) :
+        if f == "+":
+            num1 = num1 + num2
+        elif f == "-":
+            num1 = num1 - num2
+        elif f == "*":
+            num1 = num1 * num2
+        elif f == "/":
+            num1 = num1 / num2
+    return num1
+
+
+example_formula = formula(["+","-","*","/"])
+print(calculate(example_formula,1,2))
 
 
 class Math_animal:
