@@ -15,7 +15,7 @@ class formula:
 
 
 def calculate(formula,num1,num2):
-    for f in range(formula.formula) :
+    for f in formula.formula :
         if f == "+":
             num1 = num1 + num2
         elif f == "-":
@@ -28,7 +28,6 @@ def calculate(formula,num1,num2):
 
 
 example_formula = formula(["+","-","*","/"])
-print(calculate(example_formula,1,2))
 
 
 class Math_animal:
@@ -38,6 +37,13 @@ class Math_animal:
         self.gene:formula = gene
         self.input:formula = input
         self.output:formula = output
+    
+    def info(self):
+        print(self.unique_number)
+        print(self.unique_formulas)
+        print(self.gene.formula)
+        print(self.input.formula)
+        print(self.output.formula)
 
     def inherit(self):
         """UN:unique_number, UF:unique_formula"""
@@ -47,8 +53,12 @@ class Math_animal:
         new_gene = random.choice(new_UFs).append(random.choice(origin_formulas))
         new_input = random.choice(new_UFs)
         new_output = random.choice(new_UFs)
-        animal_list.append(Math_animal(new_UN,new_UFs,new_gene,new_input,new_output))
+        return (Math_animal(new_UN,new_UFs,new_gene,new_input,new_output))
 
 animal_list = []
 
-animal_list.append(Math_animal(1,["+"],["+"],["-"]))
+animal_list.append(Math_animal(1,formula(origin_formulas),formula(["+","x"]),formula("+"),formula("-")))
+
+animal_list.append(animal_list[0].inherit)
+
+animal_list[0].info
