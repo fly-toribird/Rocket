@@ -54,11 +54,10 @@ class Math_animal:
         new_input = random.choice(new_UFs)
         new_output = random.choice(new_UFs)
         return (Math_animal(new_UN,new_UFs,new_gene,new_input,new_output))
+    
+    def test(self) :
+        print("aaa")
 
-animal_list = []
-
-animal_list.append(Math_animal(1,formula(origin_formulas),formula(["+","x"]),formula("+"),formula("-")))
-
-animal_list.append(animal_list[0].inherit)
-
-animal_list[0].info
+animals_list = []
+manimal = Math_animal(1,formula(origin_formulas),formula(["+","x"]),formula("+"),formula("-"))
+manimal.info
