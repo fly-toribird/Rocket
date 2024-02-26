@@ -47,17 +47,17 @@ class Math_animal:
 
     def inherit(self):
         """UN:unique_number, UF:unique_formula"""
-        new_UN = random.int(self.unique_number - 1, self.unique_number + 1)
+        new_UN = random.randint(self.unique_number - 1, self.unique_number + 1)
         self.unique_formulas.add(self.gene)
         new_UFs = self.unique_formulas
-        new_gene = random.choice(new_UFs).append(random.choice(origin_formulas))
+        new_gene = random.choice(new_UFs)
+        new_gene.append(random.choice(origin_formulas))
         new_input = random.choice(new_UFs)
         new_output = random.choice(new_UFs)
-        return (Math_animal(new_UN,new_UFs,new_gene,new_input,new_output))
+        animals_list(Math_animal(new_UN,new_UFs,new_gene,new_input,new_output))
     
-    def test(self) :
-        print("aaa")
 
 animals_list = []
-manimal = Math_animal(1,formula(origin_formulas),formula(["+","x"]),formula("+"),formula("-"))
-manimal.info
+animals_list.append(Math_animal(1,formula(origin_formulas),formula(["+","x"]),formula("+"),formula("-")))
+animals_list[0].inherit()
+print(animals_list)
