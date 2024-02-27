@@ -1,13 +1,13 @@
 import random
 
 
-origin_formulas = ["+", "-", "*", "/"]
+origin_formulas = {"+", "-", "*", "/"}
 
 class formula:
     def __init__(self,formula):
         self.formula:list = formula
 
-    def add(self,new_formula):
+    def fadd(self,new_formula):
         self.formula.append(new_formula)
 
     def remove(self,number):
@@ -45,19 +45,27 @@ class Math_animal:
         print(self.input.formula)
         print(self.output.formula)
 
-    def inherit(self):
+    def pre_inherit(self):
         """UN:unique_number, UF:unique_formula"""
         new_UN = random.randint(self.unique_number - 1, self.unique_number + 1)
-        self.unique_formulas.add(self.gene)
-        new_UFs = self.unique_formulas
-        new_gene = random.choice(new_UFs)
-        new_gene.append(random.choice(origin_formulas))
-        new_input = random.choice(new_UFs)
-        new_output = random.choice(new_UFs)
-        animals_list(Math_animal(new_UN,new_UFs,new_gene,new_input,new_output))
-    
+        old_UFs = self.unique_formulas
+        old_UFs.add(self.gene)
+        new_UFs = list(old_UFs)
+        new_gene = formula(list(random.choice(new_UFs)))
+        new_gene.fadd(random.choice(list(origin_formulas)))
+        new_input = formula(random.choice(new_UFs))
+        new_output = formula(random.choice(new_UFs))
+        animals_list.append(Math_animal(new_UN,new_UFs,new_gene,new_input,new_output))
+
+    def inherit(self,num):
+        for k in range(num):
+            self.pre_inherit()
 
 animals_list = []
-animals_list.append(Math_animal(1,formula(origin_formulas),formula(["+","x"]),formula("+"),formula("-")))
-animals_list[0].inherit()
+animals_list.append(Math_animal(1,
+                                origin_formulas,
+                                formula(["+","x"]),
+                                formula("+"),
+                                formula("-")))
+animals_list[0].inherit(2)
 print(animals_list)
