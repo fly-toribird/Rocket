@@ -47,3 +47,12 @@ class Limit:
 
 # lenge1 = Limit("infinity", "infinity")
 # print(lenge1.check(500))
+
+class LimitedClass:
+    def __init__(self, formula, limit):
+        self.formula: Formula = formula
+        self.limit: Limit = limit
+
+    def calc(self, *args):
+        if
+        self.formula.calc(args)
