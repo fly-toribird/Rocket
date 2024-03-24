@@ -1,71 +1,49 @@
-import random
+class Formula:
+    def __init__(self, formula, *args):
+        self.formula: str = formula
+        self.args = args
+
+    def calc(self, *args):
+        if len(self.args) != len(args):
+            raise ValueError()
+        for n in range(len(self.args)):
+            exec(f"{self.args[n]} = {args[n]}")
+        ans = eval(self.formula)
+        return ans
 
 
-origin_formulas = {"+", "-", "*", "/"}
+# f = Formula("x**2 + 4*y + 4", "x", "y")
+# print(f.calc(4, 3))
 
-class formula:
-    def __init__(self,formula):
-        self.formula:list = formula
+class Limit:
+    def __init__(self, min_limit, max_limit):
+        self.min = min_limit
+        self.max = max_limit
 
-    def fadd(self,new_formula):
-        self.formula.append(new_formula)
+    def check(self, num):
+        if self.max == "infinity":
+            if self.min == "infinity":
+                return True
+            else:
+                if self.min <= num:
+                    return True
+                else:
+                    return False
+        else:
+            if self.min == "infinity":
+                if self.max >= num:
+                    return True
+                else:
+                    return False
+            else:
+                if self.max >= num:
+                    if self.min <= num:
+                        return True
+                    else:
+                        return False
+                else:
+                    return False
 
-    def remove(self,number):
-        del self.formula[number]
 
-
-def calculate(formula,num1,num2):
-    for f in formula.formula :
-        if f == "+":
-            num1 = num1 + num2
-        elif f == "-":
-            num1 = num1 - num2
-        elif f == "*":
-            num1 = num1 * num2
-        elif f == "/":
-            num1 = num1 / num2
-    return num1
-
-
-example_formula = formula(["+","-","*","/"])
-
-
-class Math_animal:
-    def __init__(self,unique_number,unique_formulas,gene,input,output):
-        self.unique_number = unique_number
-        self.unique_formulas:set = unique_formulas
-        self.gene:formula = gene
-        self.input:formula = input
-        self.output:formula = output
-    
-    def info(self):
-        print(self.unique_number)
-        print(self.unique_formulas)
-        print(self.gene.formula)
-        print(self.input.formula)
-        print(self.output.formula)
-
-    def pre_inherit(self):
-        """UN:unique_number, UF:unique_formula"""
-        new_UN = random.randint(self.unique_number - 1, self.unique_number + 1)
-        old_UFs = self.unique_formulas
-        old_UFs.add(self.gene)
-        new_UFs = list(old_UFs)
-        new_gene = formula(list(random.choice(new_UFs)))
-        new_gene.fadd(random.choice(list(origin_formulas)))
-        new_input = formula(random.choice(new_UFs))
-        new_output = formula(random.choice(new_UFs))
-        animals_list.append(Math_animal(new_UN,new_UFs,new_gene,new_input,new_output))
-
-    def inherit(self,num):
-        for k in range(num):
-            self.pre_inherit()
-
-animals_list = []
-animals_list.append(Math_animal(1,
-                                origin_formulas,
-                                formula(["+","x"]),
-                                formula("+"),
-                                formula("-")))
-animals_list[0].inherit(2)
-print(animals_list)
+# lenge1 = Limit("infinity", "infinity")
+# print(lenge1.check(500))
