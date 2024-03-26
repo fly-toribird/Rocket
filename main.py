@@ -12,8 +12,9 @@ class Formula:
         return ans
 
 
-# f = Formula("x**2 + 4*y + 4", "x", "y")
-# print(f.calc(4, 3))
+_f = Formula("x**2 + 4 * x + 4", "x")
+# print(_f.calc(4))
+
 
 class Limit:
     def __init__(self, min_limit, value, max_limit, mode_min="e", mode_max="e"):
@@ -22,9 +23,10 @@ class Limit:
         self.value = value
         self.mode_max = mode_max
         self.max = max_limit
-        if not (mode_min == "n" or mode_min == "e"):
+        if self.max < self.min:
+        if not (self.mode_min == "n" or self.mode_min == "e"):
             raise ValueError()
-        if not (mode_max == "n" or mode_max == "e"):
+        if not (self.mode_max == "n" or self.mode_max == "e"):
             raise ValueError()
 
     def check(self, value, num):
@@ -63,8 +65,8 @@ class Limit:
                         return False
 
 
-lenge1 = Limit(2, "x", 10)
-print(lenge1.check("x", 1))
+_range1 = Limit(2, "x", 10)
+# print(_range1.check("x", 1))
 
 
 class LimitedFormula:
@@ -74,5 +76,11 @@ class LimitedFormula:
 
     def calc(self, *args):
         for i in range(len(self.limits)):
-            if not self.limits[i].check(self.formula.args[1], args[i]):
+            if not self.limits[i].check(self.formula.args[i], args[i]):
                 return None
+        ans = self.formula.calc(*args)
+        return ans
+
+
+_g = LimitedFormula(_f, Limit(2, "x", 10))
+print(_g.calc(1))
