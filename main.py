@@ -1,4 +1,5 @@
 class Formula:
+    """(formula, *args)"""
     def __init__(self, formula, *args):
         self.formula: str = formula
         self.args = args
@@ -22,14 +23,16 @@ _f = Formula("x**2 + 4 * x + 4", "x")
 
 
 class Limit:
+    """(min_limit, value, max_limit, mode_min="e", mode_max="e")"""
     def __init__(self, min_limit, value, max_limit, mode_min="e", mode_max="e"):
         self.min = min_limit
         self.mode_min = mode_min
         self.value = value
         self.mode_max = mode_max
         self.max = max_limit
-        if self.max < self.min:
-            raise ValueError()
+        if type(self.mode_min) != str and type(self.mode_max) != str:
+            if self.max < self.min:
+                raise ValueError()
         if not (self.mode_min == "n" or self.mode_min == "e"):
             raise ValueError()
         if not (self.mode_max == "n" or self.mode_max == "e"):
@@ -81,6 +84,7 @@ _range1 = Limit(2, "x", 10)
 
 
 class LimitedFormula:
+    """(formula, *limits)"""
     def __init__(self, formula, *limits):
         self.formula: formula = formula
         self.limits = limits
@@ -101,14 +105,22 @@ _g = LimitedFormula(_f, Limit(2, "x", 5))
 
 
 class Formulas:
+    """
+    (*formulas) \n
+    Don't mind Formula or LimitedFormula
+    """
     def __init__(self, *formulas):
-        """*formulasはFormulaでもLimitedFormulaでも可"""
         self.formulas = formulas
 
     def calc(self, *args):
         answers = []
         for m in range(len(self.formulas)):
             answers.append(self.formulas[m].calc(*args))
+        answers = [p for p in answers if p is not None]
+        if len(answers) == 0:
+            return None
+        if len(answers) == 1:
+            return answers[0]
         return tuple(answers)
 
 
