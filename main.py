@@ -16,11 +16,14 @@ class Formula:
 # print(f.calc(4, 3))
 
 class Limit:
-    def __init__(self, min_limit, max_limit):
+    def __init__(self, value, min_limit, max_limit):
+        self.value = value
         self.min = min_limit
         self.max = max_limit
 
-    def check(self, num):
+    def check(self, num, value):
+        if value != self.value :
+            raise ValueError()
         if self.max == "infinity":
             if self.min == "infinity":
                 return True
@@ -48,11 +51,12 @@ class Limit:
 # lenge1 = Limit("infinity", "infinity")
 # print(lenge1.check(500))
 
-class LimitedClass:
-    def __init__(self, formula, limit):
-        self.formula: Formula = formula
-        self.limit: Limit = limit
+class LimitedFormula :
+    def __init__(self,formula,*limits):
+        self.formula: formula = formula
+        self.limits = limits
 
     def calc(self, *args):
-        if
-        self.formula.calc(args)
+        for i in range(len(self.limits)):
+            if not self.limits[i].check(args[i]):
+                return None
