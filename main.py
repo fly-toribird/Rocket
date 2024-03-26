@@ -97,24 +97,20 @@ class LimitedFormula:
 
 
 _g = LimitedFormula(_f, Limit(2, "x", 5))
-print(_g.calc(1))
+# print(_g.calc(4))
 
 
 class Formulas:
     def __init__(self, *formulas):
         """*formulasはFormulaでもLimitedFormulaでも可"""
-        self.formulas = list(formulas)
-        for k in range(len(self.formulas)):
-            if type(self.formulas[k]) == Formula:
-                self.formulas[k] = LimitedFormula(self.formulas[k],
-                                                  Limit("infinity", self.formulas[k].getargs(), "infinity"))
-        self.formulas = tuple(self.formulas)
+        self.formulas = formulas
 
     def calc(self, *args):
-        anses = []
+        answers = []
         for m in range(len(self.formulas)):
-            anses.append = self.formulas[m].calc(*args)
+            answers.append(self.formulas[m].calc(*args))
+        return tuple(answers)
 
 
 _fs = Formulas(_f, _g)
-_fs.calc(4)
+# print(_fs.calc(10))
