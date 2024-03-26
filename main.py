@@ -11,8 +11,13 @@ class Formula:
         ans = eval(self.formula)
         return ans
 
+    def getargs(self):
+        return self.args
+
 
 _f = Formula("x**2 + 4 * x + 4", "x")
+
+
 # print(_f.calc(4))
 
 
@@ -24,10 +29,14 @@ class Limit:
         self.mode_max = mode_max
         self.max = max_limit
         if self.max < self.min:
+            raise ValueError()
         if not (self.mode_min == "n" or self.mode_min == "e"):
             raise ValueError()
         if not (self.mode_max == "n" or self.mode_max == "e"):
             raise ValueError()
+
+    def getvalue(self):
+        return self.value
 
     def check(self, value, num):
         if value != self.value:
@@ -66,6 +75,8 @@ class Limit:
 
 
 _range1 = Limit(2, "x", 10)
+
+
 # print(_range1.check("x", 1))
 
 
@@ -81,6 +92,29 @@ class LimitedFormula:
         ans = self.formula.calc(*args)
         return ans
 
+    def getargs(self):
+        return self.formula.getargs()
 
-_g = LimitedFormula(_f, Limit(2, "x", 10))
+
+_g = LimitedFormula(_f, Limit(2, "x", 5))
 print(_g.calc(1))
+
+
+class Formulas:
+    def __init__(self, *formulas):
+        """*formulasはFormulaでもLimitedFormulaでも可"""
+        self.formulas = list(formulas)
+        for k in range(len(self.formulas)):
+            if type(self.formulas[k]) == Formula:
+                self.formulas[k] = LimitedFormula(self.formulas[k],
+                                                  Limit("infinity", self.formulas[k].getargs(), "infinity"))
+        self.formulas = tuple(self.formulas)
+
+    def calc(self, *args):
+        anses = []
+        for m in range(len(self.formulas)):
+            anses.append = self.formulas[m].calc(*args)
+
+
+_fs = Formulas(_f, _g)
+_fs.calc(4)
